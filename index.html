@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couture Pro - Agenda & Dashboard</title>
+    <!-- Modern Font: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#A67C00">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="light-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header" style="justify-content: center; padding: 20px 0;">
+                <div class="logo">
+                    <img src="assets/img/logo.png" alt="Sarkin Wanka Logo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="index.html"><i class="fa-solid fa-calendar-day"></i> Agenda</a></li>
+                <li><a href="atelier.html"><i class="fa-solid fa-tape"></i> Atelier</a></li>
+                <li><a href="boutique.html"><i class="fa-solid fa-store"></i> Boutique</a></li>
+                <li><a href="bibliotheque.html"><i class="fa-solid fa-book-open"></i> Bibliothèque</a></li>
+            </ul>
+            <div class="sidebar-footer" style="padding-top: 2rem;">
+                <button id="theme-toggle" class="btn-icon">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div style="margin-left:auto; display:flex; gap:10px;">
+                    <a href="https://sarkin-wanka.onrender.com/" target="_blank" class="btn-icon" title="Site Principal"><i class="fa-solid fa-globe"></i></a>
+                    <a href="https://chamsoudine-dev.github.io/SARKIN-WANKA/" target="_blank" class="btn-icon" title="Site Secondaire"><i class="fa-solid fa-link"></i></a>
+                    <a href="parametre.html" class="btn-icon" title="Paramètres" style="text-decoration:none;"><i class="fa-solid fa-gear"></i></a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <h1>Agenda du Jour</h1>
+                    <p class="subtitle" id="current-date">Aujourd'hui</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="openNewTaskModal()">
+                        <i class="fa-solid fa-plus"></i> Nouvelle Commande
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Stats -->
+            <section class="stats-grid">
+                <div class="stat-card glass-panel" onclick="window.location.href='#agenda-list'" style="cursor: pointer;" title="Voir les rendez-vous">
+                    <div class="stat-icon bg-primary-light">
+                        <i class="fa-solid fa-calendar-check text-primary"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Rendez-vous</h3>
+                        <p class="stat-value">4</p>
+                    </div>
+                </div>
+                <div class="stat-card glass-panel" onclick="window.location.href='atelier.html'" style="cursor: pointer;" title="Aller à l'atelier">
+                    <div class="stat-icon bg-warning-light">
+                        <i class="fa-solid fa-cut text-warning"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>En Atelier</h3>
+                        <p class="stat-value" id="stat-atelier">12</p>
+                    </div>
+                </div>
+                <div class="stat-card glass-panel" onclick="window.location.href='boutique.html'" style="cursor: pointer;" title="Aller à la boutique">
+                    <div class="stat-icon bg-success-light">
+                        <i class="fa-solid fa-bag-shopping text-success"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Prêts en Boutique</h3>
+                        <p class="stat-value" id="stat-boutique">7</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Agenda View -->
+            <section class="agenda-section">
+                <div class="agenda-header">
+                    <h2>Rendez-vous & Tâches à venir</h2>
+                </div>
+                <div class="agenda-list" id="agenda-list">
+                    <!-- Les rendez-vous seront injectés ici par JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modale d'ajout de commande -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <span class="close-modal" onclick="closeNewTaskModal()">&times;</span>
+            <h2>Nouvelle Commande / Tâche</h2>
+            <form id="new-task-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom du Client</label>
+                        <input type="text" id="client-name" required placeholder="Ex: Marie Dupont">
+                    </div>
+                    <div class="form-group">
+                        <label>N° WhatsApp</label>
+                        <input type="tel" id="client-phone" placeholder="Ex: +22792622764">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Type de vêtement</label>
+                    <input type="text" id="cloth-type" required placeholder="Ex: Robe de soirée">
+                </div>
+                <!-- Prix de la commande -->
+                <div class="form-group">
+                    <label>Prix de la commande (en FCFA)</label>
+                    <input type="number" id="task-price" required placeholder="Ex: 15000">
+                </div>
+                <!-- Assignation -->
+                <div class="form-group">
+                    <label>Attribuer au tailleur (Optionnel)</label>
+                    <select id="task-assignee" style="width:100%; padding:12px; border:1px solid rgba(0,0,0,0.1); border-radius:8px; font-family:'Outfit';">
+                        <option value="">-- Atelier Général --</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date de livraison prévue</label>
+                        <input type="date" id="due-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Étape initiale</label>
+                        <select id="initial-step">
+                            <option value="agenda">Agenda (Prise de mesure/Essai)</option>
+                            <option value="atelier">Atelier (En confection)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Photo du Tissu / Modèle <span style="font-size:0.8rem;color:var(--text-muted)">(Optionnel)</span></label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="cloth-photo" accept="image/*" capture="environment" class="file-input">
+                        <div class="file-upload-box" id="file-upload-box">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Prendre une photo ou importer</span>
+                        </div>
+                        <img id="photo-preview" class="photo-preview" style="display:none;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes / Mesures importantes</label>
+                    <textarea id="task-notes" rows="3" placeholder="Tour de taille: 75cm..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeNewTaskModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

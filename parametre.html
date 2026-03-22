@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarkin Wanka - Paramètres</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#A67C00">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="light-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header" style="justify-content: center; padding: 20px 0;">
+                <div class="logo">
+                    <img src="assets/img/logo.png" alt="Sarkin Wanka Logo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fa-solid fa-calendar-day"></i> Agenda</a></li>
+                <li><a href="atelier.html"><i class="fa-solid fa-tape"></i> Atelier</a></li>
+                <li><a href="boutique.html"><i class="fa-solid fa-store"></i> Boutique</a></li>
+                <li><a href="bibliotheque.html"><i class="fa-solid fa-book-open"></i> Bibliothèque</a></li>
+            </ul>
+            <div class="sidebar-footer" style="padding-top: 2rem;">
+                <button id="theme-toggle" class="btn-icon">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div style="margin-left:auto; display:flex; gap:10px;">
+                    <a href="https://sarkin-wanka.onrender.com/" target="_blank" class="btn-icon" title="Site Principal"><i class="fa-solid fa-globe"></i></a>
+                    <a href="https://chamsoudine-dev.github.io/SARKIN-WANKA/" target="_blank" class="btn-icon" title="Site Secondaire"><i class="fa-solid fa-link"></i></a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <h1><i class="fa-solid fa-gear" style="color:var(--primary-color)"></i> Paramètres</h1>
+                    <p class="subtitle">Gérer votre compte et vos préférences</p>
+                </div>
+            </header>
+
+            <section class="agenda-section">
+                <div class="glass-panel" style="padding: 2.5rem; max-width: 600px;">
+                    <h2 style="margin-bottom: 2rem; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom:10px;">Profil et Entreprise</h2>
+                    
+                    <form id="settings-form">
+                        <div class="form-group" style="text-align: center; margin-bottom: 2rem;">
+                            <img id="profile-pic-preview" src="https://ui-avatars.com/api/?name=Sarkin+Wanka&background=A67C00&color=fff" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom:15px; border: 3px solid var(--primary-color);">
+                            <br>
+                            <label for="profile-upload" class="btn btn-secondary" style="cursor:pointer; display:inline-flex;">
+                                <i class="fa-solid fa-camera"></i> Changer la photo
+                            </label>
+                            <input type="file" id="profile-upload" accept="image/*" style="display:none;">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nom de l'entreprise ou Tailleur</label>
+                            <input type="text" id="setting-name" value="Sarkin Wanka Fashion Design" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Numéro de téléphone principal</label>
+                            <input type="tel" id="setting-phone" value="+227 92 62 27 64" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse de l'Atelier</label>
+                            <input type="text" id="setting-address" value="Niamey, Niger" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Devise Mónetaire (Prix)</label>
+                            <select id="setting-currency">
+                                <option value="FCFA">FCFA</option>
+                                <option value="EUR">Euro (€)</option>
+                                <option value="USD">Dollar ($)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Couleur du Thème</label>
+                            <select id="setting-theme-color">
+                                <option value="">Or (Défaut)</option>
+                                <option value="blue-theme">Bleu</option>
+                                <option value="green-theme">Vert</option>
+                                <option value="red-theme">Rouge</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-actions" style="margin-top: 3rem;">
+                            <button type="button" class="btn btn-primary" style="width: 100%; justify-content:center; font-size:1.1rem; padding: 15px;" onclick="saveSettings()">
+                                <i class="fa-solid fa-save"></i> Enregistrer les modifications
+                            </button>
+                        </div>
+                    </form>
+
+                    <h2 style="margin-bottom: 2rem; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom:10px; margin-top:3rem;">Comptes Tailleurs (Accès Espace)</h2>
+                    <form id="add-tailor-form" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 20px;">
+                        <input type="text" id="new-t-user" placeholder="Nom d'utilisateur (ex: Ali)" required style="flex:1; min-width: 150px; padding: 12px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: 'Outfit';">
+                        <input type="text" id="new-t-pass" placeholder="Mot de passe initial" required style="flex:1; min-width: 150px; padding: 12px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; font-family: 'Outfit';">
+                        <button type="button" class="btn btn-primary" onclick="addTailor()"><i class="fa-solid fa-plus"></i> Créer</button>
+                    </form>
+                    
+                    <div style="overflow-x:auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; background: var(--bg-color); border-radius:8px;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid rgba(0,0,0,0.05);">
+                                    <th style="padding: 15px;">Tailleur</th>
+                                    <th style="padding: 15px; text-align:right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tailors-list-body">
+                                <!-- JS Injects -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 style="margin-bottom: 2rem; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom:10px; margin-top:3rem;">Portails Additionnels</h2>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-secondary" style="flex:1; justify-content:center; min-width: 200px;" onclick="window.open('tailleur.html', '_blank')">
+                            <i class="fa-solid fa-scissors"></i> Espace Tailleur
+                        </button>
+                        <button type="button" class="btn btn-secondary" style="flex:1; justify-content:center; min-width: 200px; color: var(--primary-color);" onclick="window.open('https://sarkin-wanka.onrender.com/', '_blank')">
+                            <i class="fa-solid fa-globe"></i> Site Principal
+                        </button>
+                        <button type="button" class="btn btn-secondary" style="flex:1; justify-content:center; min-width: 200px; color: var(--success-color);" onclick="window.open('https://chamsoudine-dev.github.io/SARKIN-WANKA/', '_blank')">
+                            <i class="fa-solid fa-link"></i> Site Secondaire
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('sw_settings')) || {};
+            if(settings.name) document.getElementById('setting-name').value = settings.name;
+            if(settings.phone) document.getElementById('setting-phone').value = settings.phone;
+            if(settings.address) document.getElementById('setting-address').value = settings.address;
+            if(settings.currency) document.getElementById('setting-currency').value = settings.currency;
+            if(settings.photo) document.getElementById('profile-pic-preview').src = settings.photo;
+            
+            const savedColor = localStorage.getItem('coutureColor');
+            if(savedColor) document.getElementById('setting-theme-color').value = savedColor;
+        }
+
+        function saveSettings() {
+            const settings = {
+                name: document.getElementById('setting-name').value,
+                phone: document.getElementById('setting-phone').value,
+                address: document.getElementById('setting-address').value,
+                currency: document.getElementById('setting-currency').value,
+                photo: document.getElementById('profile-pic-preview').src
+            };
+            localStorage.setItem('sw_settings', JSON.stringify(settings));
+            
+            const themeColor = document.getElementById('setting-theme-color').value;
+            localStorage.setItem('coutureColor', themeColor);
+            
+            alert("Paramètres enregistrés avec succès !");
+            window.location.reload();
+        }
+
+        // --- GESTION DES TAILLEURS ---
+        function loadTailors() {
+            const body = document.getElementById('tailors-list-body');
+            if(!body) return;
+            const tailors = JSON.parse(localStorage.getItem('sw_tailors')) || [];
+            body.innerHTML = '';
+            if(tailors.length === 0) {
+                body.innerHTML = '<tr><td colspan="2" style="padding:15px; text-align:center; color:var(--text-muted)">Aucun tailleur configuré.</td></tr>';
+            }
+            tailors.forEach(t => {
+                body.innerHTML += `
+                    <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+                        <td style="padding: 15px; font-weight:600;"><i class="fa-solid fa-user-tie"></i> ${t.username}</td>
+                        <td style="padding: 15px; text-align:right;">
+                            <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.8rem;" onclick="resetTPass('${t.username}')"><i class="fa-solid fa-key"></i> Réinitialiser MDP</button>
+                            <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.8rem; color: var(--danger-color);" onclick="delT('${t.username}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function addTailor() {
+            const u = document.getElementById('new-t-user').value.trim();
+            const p = document.getElementById('new-t-pass').value.trim();
+            if(!u || !p) return alert("Remplissez le nom et le mot de passe.");
+            const tailors = JSON.parse(localStorage.getItem('sw_tailors')) || [];
+            if(tailors.find(x => x.username.toLowerCase() === u.toLowerCase())) return alert("Ce nom existe déjà.");
+            tailors.push({username: u, password: p});
+            localStorage.setItem('sw_tailors', JSON.stringify(tailors));
+            document.getElementById('new-t-user').value = '';
+            document.getElementById('new-t-pass').value = '';
+            loadTailors();
+        }
+
+        function resetTPass(u) {
+            const newP = prompt("Nouveau mot de passe pour " + u + " ?");
+            if(newP) {
+                const tailors = JSON.parse(localStorage.getItem('sw_tailors')) || [];
+                const t = tailors.find(x => x.username === u);
+                if(t) { 
+                    t.password = newP; 
+                    localStorage.setItem('sw_tailors', JSON.stringify(tailors)); 
+                    loadTailors(); 
+                }
+            }
+        }
+
+        function delT(u) {
+            if(confirm("Supprimer l'accès pour " + u + " ? Il ne pourra plus se connecter.")) {
+                let tailors = JSON.parse(localStorage.getItem('sw_tailors')) || [];
+                tailors = tailors.filter(x => x.username !== u);
+                localStorage.setItem('sw_tailors', JSON.stringify(tailors));
+                loadTailors();
+            }
+        }
+
+        document.getElementById('profile-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('profile-pic-preview').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            loadTailors();
+        });
+    </script>
+</body>
+</html>
