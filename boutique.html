@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couture Pro - Boutique</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#A67C00">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="light-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header" style="justify-content: center; padding: 20px 0;">
+                <div class="logo">
+                    <img src="assets/img/logo.png" alt="Sarkin Wanka Logo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fa-solid fa-calendar-day"></i> Agenda</a></li>
+                <li><a href="atelier.html"><i class="fa-solid fa-tape"></i> Atelier</a></li>
+                <li class="active"><a href="boutique.html"><i class="fa-solid fa-store"></i> Boutique</a></li>
+                <li><a href="bibliotheque.html"><i class="fa-solid fa-book-open"></i> Bibliothèque</a></li>
+            </ul>
+            <div class="sidebar-footer" style="padding-top: 2rem;">
+                <button id="theme-toggle" class="btn-icon">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div style="margin-left:auto; display:flex; gap:10px;">
+                    <a href="https://sarkin-wanka.onrender.com/" target="_blank" class="btn-icon" title="Site Principal"><i class="fa-solid fa-globe"></i></a>
+                    <a href="https://chamsoudine-dev.github.io/SARKIN-WANKA/" target="_blank" class="btn-icon" title="Site Secondaire"><i class="fa-solid fa-link"></i></a>
+                    <a href="parametre.html" class="btn-icon" title="Paramètres" style="text-decoration:none;"><i class="fa-solid fa-gear"></i></a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <h1>Espace Boutique</h1>
+                    <p class="subtitle">Vêtements prêts pour le retrait client</p>
+                </div>
+            </header>
+
+            <section class="agenda-section">
+                <div class="agenda-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:20px;">
+                    <h2>En attente de retrait</h2>
+                    <div class="search-box" style="display:flex; align-items:center; background:var(--bg-color); padding:8px 15px; border-radius:8px; border:1px solid rgba(0,0,0,0.1); flex:1; max-width:400px;">
+                        <i class="fa-solid fa-search" style="color:var(--text-muted); margin-right:10px;"></i>
+                        <input type="text" id="search-boutique" placeholder="Rechercher par client ou téléphone..." style="border:none; background:transparent; width:100%; font-family:'Outfit'; outline:none;">
+                    </div>
+                </div>
+                <div class="atelier-grid" id="boutique-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <!-- Les cartes seront injectées ici par JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script inclus -->
+    <script src="assets/js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { 
+            if(typeof renderBoutique === "function") renderBoutique(); 
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Tailleur - Sarkin Wanka</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#A67C00">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="light-theme">
+    
+    <!-- ECRAN DE CONNEXION -->
+    <div class="app-container" id="login-container">
+        <main class="main-content" style="display:flex; justify-content:center; align-items:center; height:100vh; margin-left:0;">
+            <div class="glass-panel" style="padding: 2.5rem; max-width: 400px; width:100%; text-align:center;">
+                <img src="assets/img/logo.png" alt="Sarkin Wanka Logo" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 8px 25px rgba(0,0,0,0.4); margin-bottom: 2rem;">
+                <h2>Connexion Tailleur</h2>
+                <br>
+                <form id="login-form">
+                    <div class="form-group" style="text-align:left;">
+                        <label>Nom d'utilisateur</label>
+                        <input type="text" id="login-user" required>
+                    </div>
+                    <div class="form-group" style="text-align:left;">
+                        <label>Mot de passe</label>
+                        <input type="password" id="login-pass" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:15px;">Se Connecter</button>
+                    <p id="login-error" style="color:var(--danger-color); margin-top:10px; display:none;">Identifiants incorrects ou compte inexistant.</p>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- ECRAN PRINCIPAL (DASHBOARD TAILLEUR) -->
+    <div class="app-container" id="dashboard-container" style="display:none;">
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header" style="justify-content: center; padding: 20px 0;">
+                <div class="logo">
+                    <img src="assets/img/logo.png" alt="Sarkin Wanka Logo" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="#" onclick="showTab('tasks')"><i class="fa-solid fa-tape"></i> Mes Travaux</a></li>
+                <li><a href="#" onclick="showTab('profile')"><i class="fa-solid fa-user"></i> Mon Profil</a></li>
+            </ul>
+            <div class="sidebar-footer" style="padding-top: 2rem;">
+                <button id="theme-toggle" class="btn-icon">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div style="margin-left:auto; display:flex; gap:10px;">
+                    <a href="https://sarkin-wanka.onrender.com/" target="_blank" class="btn-icon" title="Site Principal"><i class="fa-solid fa-globe"></i></a>
+                    <a href="https://chamsoudine-dev.github.io/SARKIN-WANKA/" target="_blank" class="btn-icon" title="Site Secondaire"><i class="fa-solid fa-link"></i></a>
+                    <a href="#" onclick="logout()" class="btn-icon" title="Déconnexion" style="text-decoration:none;"><i class="fa-solid fa-right-from-bracket"></i></a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <h1><i class="fa-solid fa-shirt" style="color:var(--primary-color)"></i> Bonjour, <span id="tailor-name-display"></span> !</h1>
+                    <p class="subtitle " id="header-subtitle">Voici la liste des pièces qui vous sont assignées.</p>
+                </div>
+            </header>
+
+            <!-- ONGLET : TRAVAUX -->
+            <section class="agenda-section" id="tab-tasks">
+                <div class="atelier-grid" id="tailleur-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <!-- JS injects here -->
+                </div>
+            </section>
+
+            <!-- ONGLET : PROFIL ET PARAMETRES -->
+            <section class="agenda-section" id="tab-profile" style="display:none;">
+                <div class="glass-panel" style="padding: 2.5rem; max-width: 600px;">
+                    <h2>Gestion de Mon Compte</h2>
+                    <br>
+                    <div class="form-group">
+                        <label>Changer mon Mot de Passe</label>
+                        <input type="password" id="new-password" placeholder="Renseigner un nouveau mot de passe">
+                        <button class="btn btn-secondary" style="margin-top:10px;" onclick="changePassword()">Mettre à jour le mot de passe</button>
+                    </div>
+                    
+                    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.1); margin: 30px 0;">
+                    
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-music"></i> Son de Notification (MP3, WAV)</label>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">Cette musique jouera automatiquement lorsqu'on vous assigne un nouveau travail à l'atelier.</p>
+                        <input type="file" id="audio-upload" accept="audio/*" style="font-family:'Outfit'">
+                        <div style="display:flex; gap:10px; margin-top:10px;">
+                            <button class="btn btn-secondary" style="background:var(--success-color); color:white;" onclick="saveAudio()">Enregistrer la musique</button>
+                            <button class="btn btn-secondary" onclick="testAudio()"><i class="fa-solid fa-play"></i> Tester</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Script inclus -->
+    <script src="assets/js/app.js"></script>
+    <script>
+        let currentUser = sessionStorage.getItem('loggedTailor');
+
+        function checkAuth() {
+            if (currentUser) {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('dashboard-container').style.display = 'flex';
+                document.getElementById('tailor-name-display').innerText = currentUser;
+                if(typeof renderTailleur === 'function') renderTailleur();
+            } else {
+                document.getElementById('login-container').style.display = 'flex';
+                document.getElementById('dashboard-container').style.display = 'none';
+            }
+        }
+
+        // Système de Login
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const u = document.getElementById('login-user').value.trim();
+            const p = document.getElementById('login-pass').value.trim();
+            const tailors = JSON.parse(localStorage.getItem('sw_tailors')) || [];
+            
+            if (tailors.find(t => t.username.toLowerCase() === u.toLowerCase() && t.password === p)) {
+                sessionStorage.setItem('loggedTailor', u);
+                currentUser = u;
+                document.getElementById('login-error').style.display = 'none';
+                document.getElementById('login-form').reset();
+                checkAuth();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        });
+
+        // Déconnexion
+        function logout() {
+            sessionStorage.removeItem('loggedTailor');
+            currentUser = null;
+            checkAuth();
+        }
+
+        // Navigation Tabs
+        function showTab(tab) {
+            document.getElementById('tab-tasks').style.display = tab === 'tasks' ? 'block' : 'none';
+            document.getElementById('tab-profile').style.display = tab === 'profile' ? 'block' : 'none';
+            document.getElementById('header-subtitle').innerText = tab === 'tasks' ? 
+                "Voici la liste des pièces qui vous sont assignées." : "Gérez votre sécurité et vos notifications.";
+        }
+
+        // Changement de MDP
+        function changePassword() {
+            const newP = document.getElementById('new-password').value.trim();
+            if(!newP) return alert("Mot de passe vide.");
+            let tailors = JSON.parse(localStorage.getItem('sw_tailors')) || [];
+            let tIndex = tailors.findIndex(x => x.username.toLowerCase() === currentUser.toLowerCase());
+            if(tIndex > -1) {
+                tailors[tIndex].password = newP;
+                localStorage.setItem('sw_tailors', JSON.stringify(tailors));
+                alert('Votre mot de passe a été mis à jour avec succès.');
+                document.getElementById('new-password').value = '';
+            }
+        }
+
+        // Gestion Audio
+        let audioBase64 = null;
+        document.getElementById('audio-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    audioBase64 = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function saveAudio() {
+            if(audioBase64) {
+                localStorage.setItem('sw_audio_' + currentUser, audioBase64);
+                alert('Super ! Votre musique de notification est sauvegardée.');
+            } else {
+                alert("Veuillez d'abord sélectionner un fichier audio depuis votre appareil.");
+            }
+        }
+
+        function testAudio() {
+            if(typeof playTailorNotification === 'function') {
+                playTailorNotification(currentUser);
+            }
+        }
+
+        // Au chargement
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>

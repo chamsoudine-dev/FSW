@@ -1,0 +1,7 @@
+node_modules/
+desktop-app/
+android/
+cordova_app/
+dist/
+.vscode/
+*.log
